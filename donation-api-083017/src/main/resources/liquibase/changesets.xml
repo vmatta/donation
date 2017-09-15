@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd">
+
+    <property name="now" value="sysdate" dbms="oracle"/>
+    <property name="now" value="now()" dbms="postgresql"/>
+
+    <changeSet author="sumit.das" id="201604201509">
+        <createTable tableName="donor">
+            <column name="orderId" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="title" type="VARCHAR(10)"/>
+            <column name="firstName" type="VARCHAR(255)"/>
+            <column name="lastName" type="VARCHAR(255)"/>
+            <column name="suffix" type="VARCHAR(255)"/>
+            <column name="streetAddress1" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="streetAddress2" type="VARCHAR(255)"/>
+            <column name="streetAddress3" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="state" type="VARCHAR(255)"/>
+            <column name="zip" type="VARCHAR(255)"/>
+            <column name="country" type="VARCHAR(255)"/>
+            <column name="phone" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="fax" type="VARCHAR(255)"/>
+            <column name="email" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="preferred_contact_method" type="VARCHAR(255)"/>
+            <column name="anonymous" type="BOOLEAN"/>
+        </createTable>
+        <addUniqueConstraint tableName="donor" columnNames="orderId"/>
+    </changeSet>
+
+    <changeSet author="sumit.das" id="201604201510">
+        <createTable tableName="transaction_detail">
+            <column name="orderId" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="appId" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="appKey" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="paymentTotal" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hasError" type="BOOLEAN">
+            </column>
+            <column name="errors" type="TEXT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transactionDateTime" type="date"/>
+            <column name="approved" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="transactionID" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="paymentMode" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="transaction_detail" columnNames="orderId"/>
+    </changeSet>
+    
+    <changeSet author="sumit.das" id="201604201511">
+        <createTable tableName="notifyuser">
+            <column name="orderId" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="title" type="VARCHAR(10)"/>
+            <column name="firstName" type="VARCHAR(255)"/>
+            <column name="lastName" type="VARCHAR(255)"/>
+            <column name="suffix" type="VARCHAR(255)"/>
+            <column name="streetAddress1" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="streetAddress2" type="VARCHAR(255)"/>
+            <column name="streetAddress3" type="VARCHAR(255)"/>
+            <column name="city" type="VARCHAR(255)"/>
+            <column name="state" type="VARCHAR(255)"/>
+            <column name="zip" type="VARCHAR(255)"/>
+            <column name="country" type="VARCHAR(255)"/>
+        </createTable>
+        <addUniqueConstraint tableName="notifyuser" columnNames="orderId"/>
+    </changeSet>
+     <changeSet author="don" id="201604201512">
+        <createTable tableName="donation">
+            <column name="orderId" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="dollarAmount" type="VARCHAR(10)"/>
+            <column name="anonymous" type="BOOLEAN"/>
+            <column name="inHonorOf" type="VARCHAR(255)"/>
+            <column name="inMemoryOf" type="VARCHAR(255)"/>
+            <column name="notify" type="BOOLEAN"/>
+        </createTable>
+        <addUniqueConstraint tableName="donation" columnNames="orderId"/>
+    </changeSet>
+    
+</databaseChangeLog>
