@@ -106,5 +106,21 @@
         </createTable>
         <addUniqueConstraint tableName="donation" columnNames="orderId"/>
     </changeSet>
-    
+
+    <changeSet author="sumit" id="201709201512">
+        <createTable tableName="designation">
+            <column name="id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="orderId" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="orderItemNumber" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="designationName" type="VARCHAR(255)"/>
+            <column name="designationAmount" type="NUMERIC"/>
+        </createTable>
+        <addUniqueConstraint tableName="designation" columnNames="orderId, orderItemNumber"/>
+    </changeSet>
 </databaseChangeLog>

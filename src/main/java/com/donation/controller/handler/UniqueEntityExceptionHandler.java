@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 
-import static com.donation.exception.DuplicateEntityException.*;
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-
 /**
  * Created by Sumit on 8/20/2017.
  */

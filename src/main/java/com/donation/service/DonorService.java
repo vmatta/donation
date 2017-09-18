@@ -7,15 +7,12 @@ import com.donation.entity.NotifyUser;
 import com.donation.exception.DuplicateEntityException;
 import com.donation.exception.InvalidEntityException;
 import com.donation.model.FieldError;
-
 import com.donation.repository.DonationRepository;
 import com.donation.repository.DonorRepository;
 import com.donation.repository.NotifyUserRepository;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 /**

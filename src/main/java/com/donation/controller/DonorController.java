@@ -1,9 +1,11 @@
 package com.donation.controller;
 
+import com.donation.entity.Designation;
 import com.donation.entity.Donation;
 import com.donation.entity.Donor;
 import com.donation.entity.NotifyUser;
 import com.donation.repository.DonorRepository;
+import com.donation.service.DesignationService;
 import com.donation.service.DonorService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,6 +24,9 @@ public class DonorController {
     private DonorRepository donorRepository;
     @Autowired
     private DonorService donorService;
+
+    @Autowired
+    private DesignationService designationService;
 
     /**
      * Loads all the records from the Donor table
@@ -78,6 +83,15 @@ public class DonorController {
         return donorService.saveDonation(donation);
     }
 
+    /**
+     * Accept list of designations
+     * @param designations
+     * @return
+     */
+    @RequestMapping(value = "/save/designation", method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+    public List<Designation> saveDesignations(@RequestBody final List<Designation> designations) {
+        return designationService.saveDesignation(designations);
+    }
 }
 
 
