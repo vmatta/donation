@@ -1,6 +1,7 @@
 package com.donation.controller;
 
 import com.donation.entity.TransactionDetail;
+import com.donation.service.OrderService;
 import com.donation.service.TransactionDetailService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +18,8 @@ public class TransactionDetailController {
     public static final Logger LOGGER = LoggerFactory.getLogger(TransactionDetailController.class);
     @Autowired
     private TransactionDetailService transactionDetailService;
+    @Autowired
+    private OrderService orderService;
 
     @ResponseBody
     @RequestMapping(value = "/customer/results", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
@@ -44,7 +47,7 @@ public class TransactionDetailController {
     @RequestMapping(value = "/getOrderID", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
     public String getNextOrderId() {
         LOGGER.debug("Request received to generate a new order id");
-        return transactionDetailService.generateNewOrderId();
+        return orderService.generateOrderId();
     }
 
 

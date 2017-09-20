@@ -71,7 +71,7 @@
         </createTable>
         <addUniqueConstraint tableName="transaction_detail" columnNames="orderId"/>
     </changeSet>
-    
+
     <changeSet author="sumit.das" id="201604201511">
         <createTable tableName="notifyuser">
             <column name="orderId" type="VARCHAR(255)">
@@ -122,5 +122,13 @@
             <column name="designationAmount" type="NUMERIC"/>
         </createTable>
         <addUniqueConstraint tableName="designation" columnNames="orderId, orderItemNumber"/>
+    </changeSet>
+    <changeSet author="sumit" id="201709201812">
+        <createSequence sequenceName="hibernate_sequence" />
+        <createTable tableName="orderId">
+            <column name="id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true" />
+            </column>
+        </createTable>
     </changeSet>
 </databaseChangeLog>

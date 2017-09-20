@@ -43,9 +43,9 @@ public class TransactionDetailService {
         if (transactionDetailRepository.exists(transactionDetail.getOrderId())) {
             throw new DuplicateEntityException(String.format("Already record exist against order id %s", transactionDetail.getOrderId()));
         }
-        if(!transactionDetail.getOrderId().equals(generateNewOrderId())){
+/*        if(!transactionDetail.getOrderId().equals(generateNewOrderId())){
             throw new SequenceOrderMissMatchException("Order id should be in sequential manner");
-        }
+        }*/
         return transactionDetailRepository.save(transactionDetail);
     }
 
