@@ -131,4 +131,10 @@
             </column>
         </createTable>
     </changeSet>
+
+    <changeSet author="sumit" id="201709231812">
+        <addColumn tableName="transaction_detail">
+            <column name="transactionType" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
 </databaseChangeLog>

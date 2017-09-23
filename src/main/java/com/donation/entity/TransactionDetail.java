@@ -2,15 +2,13 @@ package com.donation.entity;
 
 import com.donation.model.Error;
 import com.donation.model.FieldError;
+import com.donation.model.TransactionType;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Date;
 
 import static org.apache.commons.lang3.StringUtils.isEmpty;
@@ -44,8 +42,11 @@ public class TransactionDetail implements Validate{
     private final Date transactionDateTIme;
     @Column(name = "paymentMode")
     private final String paymentMode;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "transactionType")
+    private TransactionType transactionType;
 
-    public TransactionDetail(String orderId, String appId, String appKey, String paymentTotal, Boolean hasError, String errors, Integer approved, String transactionId, Date transactionDateTIme, String paymentMode) {
+    public TransactionDetail(String orderId, String appId, String appKey, String paymentTotal, Boolean hasError, String errors, Integer approved, String transactionId, Date transactionDateTIme, String paymentMode, TransactionType transactionType) {
         this.orderId = orderId;
         this.appId = appId;
         this.appKey = appKey;
@@ -56,11 +57,12 @@ public class TransactionDetail implements Validate{
         this.transactionId = transactionId;
         this.transactionDateTIme = transactionDateTIme;
         this.paymentMode = paymentMode;
+        this.transactionType = transactionType;
     }
 
     // Required for hibernate to initialize object
     public TransactionDetail(){
-        this(null, null, null, null, null, null, null, null, null, null);
+        this(null, null, null, null, null, null, null, null, null, null, null);
     }
 
     public FieldError validate(){
@@ -69,5 +71,16 @@ public class TransactionDetail implements Validate{
             fieldError.addError(Error.builder().field("ORDERID").message(String.format("Numeric Order Id expected but received %s", this.orderId)).build());
         }
         return fieldError;
+    }
+
+    public TransactionDetail markAsSuccess(){
+        this.transactionType = TransactionType.SUCCESS;
+        return this;
+    }
+
+
+    public TransactionDetail markAsCancel(){
+        this.transactionType = TransactionType.CANCEL;
+        return this;
     }
 }

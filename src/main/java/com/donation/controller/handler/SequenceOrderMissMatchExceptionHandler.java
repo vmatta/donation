@@ -1,7 +1,7 @@
 package com.donation.controller.handler;
 
 import com.donation.exception.DuplicateEntityException;
-import com.donation.exception.SequenceOrderMissMatchException;
+import com.donation.exception.InvalidOrderIdException;
 import com.google.common.collect.ImmutableMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +27,8 @@ public class SequenceOrderMissMatchExceptionHandler {
      * @param request
      * @return
      */
-    @ExceptionHandler(SequenceOrderMissMatchException.class)
-    public ResponseEntity<Object> handleUniqueEntityException(SequenceOrderMissMatchException exception, WebRequest request) {
+    @ExceptionHandler(InvalidOrderIdException.class)
+    public ResponseEntity<Object> handleUniqueEntityException(InvalidOrderIdException exception, WebRequest request) {
         LOGGER.error("Sequence of order id is not proper: ", exception);
         return ResponseEntity.unprocessableEntity().body(ImmutableMap.of(
                 "status", "FAILURE",

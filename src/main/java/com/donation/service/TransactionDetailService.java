@@ -3,9 +3,12 @@ package com.donation.service;
 import com.donation.entity.TransactionDetail;
 import com.donation.exception.DuplicateEntityException;
 import com.donation.exception.InvalidEntityException;
-import com.donation.exception.SequenceOrderMissMatchException;
+import com.donation.exception.InvalidOrderIdException;
 import com.donation.model.FieldError;
+import com.donation.model.TransactionType;
+import com.donation.repository.OrderRepository;
 import com.donation.repository.TransactionDetailRepository;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +18,15 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.donation.model.TransactionType.CANCEL;
+
 @Service
 public class TransactionDetailService {
     public static final Logger LOGGER = LoggerFactory.getLogger(TransactionDetailService.class);
     @Autowired
     private TransactionDetailRepository transactionDetailRepository;
+    @Autowired
+    private OrderRepository orderRepository;
     @Autowired
     private Environment environment;
 
@@ -43,9 +50,28 @@ public class TransactionDetailService {
         if (transactionDetailRepository.exists(transactionDetail.getOrderId())) {
             throw new DuplicateEntityException(String.format("Already record exist against order id %s", transactionDetail.getOrderId()));
         }
-/*        if(!transactionDetail.getOrderId().equals(generateNewOrderId())){
-            throw new SequenceOrderMissMatchException("Order id should be in sequential manner");
-        }*/
+        if(orderRepository.findOne(transactionDetail.getOrderId()) == null){
+            throw new InvalidOrderIdException("Invalid order id");
+        }
+        return transactionDetailRepository.save(transactionDetail.markAsSuccess());
+    }
+
+    /**
+     * This method accept orderId and mark the transaction as cancel
+     * @param orderId
+     * @return
+     */
+    public TransactionDetail cancelTransactionDetail(String orderId) {
+        LOGGER.debug("Storing cancel transaction for order Id : {}", orderId);
+
+        if(StringUtils.isBlank(orderId) || orderRepository.getOne(orderId) == null){
+            throw new InvalidOrderIdException("Invalid order id");
+        }
+        if (transactionDetailRepository.exists(orderId)) {
+            throw new DuplicateEntityException(String.format("Already record exist against order id %s", orderId));
+        }
+
+        TransactionDetail transactionDetail = TransactionDetail.builder().transactionType(CANCEL).approved(-1).orderId(orderId).build();
         return transactionDetailRepository.save(transactionDetail);
     }
 

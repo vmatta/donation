@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
 import static com.donation.util.CastUtil.getDateTime;
@@ -43,6 +44,13 @@ public class TransactionDetailController {
         LOGGER.info("Successfully stored transaction response for Order Id : {} and Transaction Id : {}", orderId, uPayTransactionID);
         return savedTransactionDetail;
     }
+
+    @RequestMapping(value = "/customer/cancel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
+    public TransactionDetail cancelTransaction(@QueryParam("orderId") String orderId) {
+        LOGGER.debug("Request received to mark a transaction as cancel for the order Id {}", orderId);
+        return transactionDetailService.cancelTransactionDetail(orderId);
+    }
+
 
     @RequestMapping(value = "/getOrderID", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
     public String getNextOrderId() {
