@@ -15,7 +15,7 @@ import static org.apache.commons.lang3.StringUtils.isEmpty;
  * Created by Sumit on 9/19/2017.
  */
 @Entity
-@Table(name = "designation")
+@Table(name = "designationlist")
 @Getter
 @ToString
 public class Designation implements Validate {

@@ -9,7 +9,7 @@ import javax.persistence.*;
  * Created by Sumit on 9/20/2017.
  */
 @Entity
-@Table(name = "orderId")
+@Table(name = "ORDERSEQ")
 public class Order implements Identifiable<String> {
     @Id
     @GenericGenerator(
@@ -17,7 +17,7 @@ public class Order implements Identifiable<String> {
             strategy = "com.donation.configuration.StringSequenceIdentifier",
             parameters = {
                     @org.hibernate.annotations.Parameter(
-                            name = "sequence_name", value = "hibernate_sequence"),
+                            name = "sequence_name", value = "hibernate_sequence3"),
                     @org.hibernate.annotations.Parameter(
                             name = "sequence_prefix", value = "1"),
             }

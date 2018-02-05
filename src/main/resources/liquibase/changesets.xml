@@ -8,7 +8,7 @@
     <property name="now" value="sysdate" dbms="oracle"/>
     <property name="now" value="now()" dbms="postgresql"/>
 
-    <changeSet author="sumit.das" id="201604201509">
+    <changeSet author="dontest" id="201604201509">
         <createTable tableName="donor">
             <column name="orderId" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -36,10 +36,9 @@
             <column name="preferred_contact_method" type="VARCHAR(255)"/>
             <column name="anonymous" type="BOOLEAN"/>
         </createTable>
-        <addUniqueConstraint tableName="donor" columnNames="orderId"/>
     </changeSet>
 
-    <changeSet author="sumit.das" id="201604201510">
+    <changeSet author="dontest" id="201604201510">
         <createTable tableName="transaction_detail">
             <column name="orderId" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -69,10 +68,9 @@
                 <constraints nullable="false"/>
             </column>
         </createTable>
-        <addUniqueConstraint tableName="transaction_detail" columnNames="orderId"/>
-    </changeSet>
+     </changeSet>
 
-    <changeSet author="sumit.das" id="201604201511">
+    <changeSet author="dontest" id="201604201511">
         <createTable tableName="notifyuser">
             <column name="orderId" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -91,9 +89,8 @@
             <column name="zip" type="VARCHAR(255)"/>
             <column name="country" type="VARCHAR(255)"/>
         </createTable>
-        <addUniqueConstraint tableName="notifyuser" columnNames="orderId"/>
     </changeSet>
-     <changeSet author="don" id="201604201512">
+     <changeSet author="dontest" id="201604201512">
         <createTable tableName="donation">
             <column name="orderId" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
@@ -104,11 +101,10 @@
             <column name="inMemoryOf" type="VARCHAR(255)"/>
             <column name="notify" type="BOOLEAN"/>
         </createTable>
-        <addUniqueConstraint tableName="donation" columnNames="orderId"/>
     </changeSet>
 
-    <changeSet author="sumit" id="201709201512">
-        <createTable tableName="designation">
+    <changeSet author="dontest" id="201709201512">
+        <createTable tableName="designationlist">
             <column name="id" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
@@ -121,18 +117,18 @@
             <column name="designationName" type="VARCHAR(255)"/>
             <column name="designationAmount" type="NUMERIC"/>
         </createTable>
-        <addUniqueConstraint tableName="designation" columnNames="orderId, orderItemNumber"/>
+        <addUniqueConstraint tableName="designationlist" columnNames="orderId, orderItemNumber"/>
     </changeSet>
-    <changeSet author="sumit" id="201709201812">
-        <createSequence sequenceName="hibernate_sequence" />
-        <createTable tableName="orderId">
+    <changeSet author="dontest" id="201710250001">
+        <createSequence sequenceName="hibernate_sequence3" />
+        <createTable tableName="orderseq">
             <column name="id" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true" />
             </column>
         </createTable>
     </changeSet>
 
-    <changeSet author="sumit" id="201709231812">
+    <changeSet author="dontest" id="201709231812">
         <addColumn tableName="transaction_detail">
             <column name="transactionType" type="VARCHAR(255)"/>
         </addColumn>

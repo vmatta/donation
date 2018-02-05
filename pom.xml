@@ -14,8 +14,8 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.6.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <version>1.5.9.RELEASE</version>
+          <relativePath/><!-- lookup parent from repository -->
     </parent>
 
     <properties>
@@ -27,7 +27,7 @@
         <liquibase.version>3.3.5</liquibase.version>
         <jcl.slf4j.version>1.7.12</jcl.slf4j.version>
         <logback.version>1.1.7</logback.version>
-        <lombok-maven-plugin-version>1.16.12.0</lombok-maven-plugin-version>
+        <lombok-maven-plugin-version>1.16.18.0</lombok-maven-plugin-version>
         <commons-lang3.version>3.4</commons-lang3.version>
         <guava.version>19.0</guava.version>
     </properties>
@@ -59,7 +59,7 @@
                 <exclusion>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
+                </exclusion>				
             </exclusions>
         </dependency>
         <dependency>
@@ -154,9 +154,12 @@
             <id>restlet</id>
             <url>http://maven.restlet.com/</url>
         </repository>
+        
         <repository>
             <id>codelds</id>
             <url>https://code.lds.org/nexus/content/groups/main-repo</url>
         </repository>
+         
+        
     </repositories>
 </project>
