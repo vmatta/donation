@@ -133,4 +133,11 @@
             <column name="transactionType" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
+    
+    <changeSet author="dontest" id="20180205">
+    <renameColumn 
+            newColumnName="id"
+            oldColumnName="orderId"
+            tableName="transaction_detail"/>
+</changeSet>
 </databaseChangeLog>

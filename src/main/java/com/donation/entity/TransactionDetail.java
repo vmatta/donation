@@ -22,7 +22,7 @@ import static org.apache.commons.lang3.StringUtils.isNumeric;
 @Builder
 public class TransactionDetail implements Validate{
     @Id
-    @Column(name = "orderId")
+    @Column(name = "id")
     private final String orderId;
     @Column(name = "appId")
     private final String appId;

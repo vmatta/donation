@@ -53,7 +53,8 @@ public class TransactionDetailService {
         if(orderRepository.findOne(transactionDetail.getOrderId()) == null){
             throw new InvalidOrderIdException("Invalid order id");
         }
-        return transactionDetailRepository.save(transactionDetail.markAsSuccess());
+        TransactionDetail successfulTransaction = transactionDetail.markAsSuccess();
+        return transactionDetailRepository.save(successfulTransaction);
     }
 
     /**
