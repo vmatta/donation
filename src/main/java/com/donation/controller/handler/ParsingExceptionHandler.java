@@ -17,22 +17,19 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ParsingExceptionHandler {
-    public static final Logger LOGGER = LoggerFactory.getLogger(ParsingExceptionHandler.class);
 
-    /**
-     * This method is called whenever Date parsing
-     * is throwing any error
-     * @param dateParseException
-     * @param request
-     * @return
-     */
-    @ExceptionHandler(DateParseException.class)
-    public ResponseEntity<Object> handleValidationException(DateParseException dateParseException, WebRequest request) {
-        LOGGER.error("Parsing Exception: ", dateParseException);
-        return ResponseEntity.unprocessableEntity().body(ImmutableMap.of(
-                "status", "FAILURE",
-                "code", 141,
-                "message", dateParseException.getMessage()
-        ));
-    }
+  public static final Logger LOGGER = LoggerFactory.getLogger(ParsingExceptionHandler.class);
+
+  /**
+   * This method is called whenever Date parsing is throwing any error
+   */
+  @ExceptionHandler(DateParseException.class)
+  public ResponseEntity<Object> handleValidationException(DateParseException dateParseException, WebRequest request) {
+    LOGGER.error("Parsing Exception: ", dateParseException);
+    return ResponseEntity.unprocessableEntity().body(ImmutableMap.of(
+        "status", "FAILURE",
+        "code", 141,
+        "message", dateParseException.getMessage()
+    ));
+  }
 }

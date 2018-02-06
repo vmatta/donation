@@ -18,21 +18,16 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ValidationExceptionHandler extends ResponseEntityExceptionHandler {
 
-    /**
-     * This method being called when validation of
-     * an entity object throws validation error
-     *
-     * @param validationException
-     * @param request
-     * @return
-     */
-    @ExceptionHandler(InvalidEntityException.class)
-    public ResponseEntity<Object> handleValidationException(InvalidEntityException validationException, WebRequest request) {
-        logger.error("ValidationException: ", validationException);
-        return ResponseEntity.unprocessableEntity().body(ImmutableMap.of(
-                "status", "FAILURE",
-                "code", 400,
-                "errors", validationException.getErrors()
-        ));
-    }
+  /**
+   * This method being called when validation of an entity object throws validation error
+   */
+  @ExceptionHandler(InvalidEntityException.class)
+  public ResponseEntity<Object> handleValidationException(InvalidEntityException validationException, WebRequest request) {
+    logger.error("ValidationException: ", validationException);
+    return ResponseEntity.unprocessableEntity().body(ImmutableMap.of(
+        "status", "FAILURE",
+        "code", 400,
+        "errors", validationException.getErrors()
+    ));
+  }
 }

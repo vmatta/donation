@@ -10,18 +10,18 @@
 
     <changeSet author="dontest" id="201604201509">
         <createTable tableName="donor">
-            <column name="orderId" type="VARCHAR(255)">
+            <column name="order_id" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="title" type="VARCHAR(10)"/>
-            <column name="firstName" type="VARCHAR(255)"/>
-            <column name="lastName" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
             <column name="suffix" type="VARCHAR(255)"/>
-            <column name="streetAddress1" type="VARCHAR(255)">
+            <column name="street_address1" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="streetAddress2" type="VARCHAR(255)"/>
-            <column name="streetAddress3" type="VARCHAR(255)"/>
+            <column name="street_address2" type="VARCHAR(255)"/>
+            <column name="street_address3" type="VARCHAR(255)"/>
             <column name="city" type="VARCHAR(255)"/>
             <column name="state" type="VARCHAR(255)"/>
             <column name="zip" type="VARCHAR(255)"/>
@@ -40,31 +40,31 @@
 
     <changeSet author="dontest" id="201604201510">
         <createTable tableName="transaction_detail">
-            <column name="orderId" type="VARCHAR(255)">
+            <column name="order_id" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="appId" type="VARCHAR(255)">
+            <column name="app_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="appKey" type="VARCHAR(255)">
+            <column name="app_key" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="paymentTotal" type="VARCHAR(255)">
+            <column name="payment_total" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="hasError" type="BOOLEAN">
+            <column name="has_error" type="BOOLEAN">
             </column>
             <column name="errors" type="TEXT">
                 <constraints nullable="false"/>
             </column>
-            <column name="transactionDateTime" type="date"/>
+            <column name="transaction_date_time" type="date"/>
             <column name="approved" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="transactionID" type="VARCHAR(255)">
+            <column name="transaction_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="paymentMode" type="VARCHAR(255)">
+            <column name="payment_mode" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
@@ -72,18 +72,18 @@
 
     <changeSet author="dontest" id="201604201511">
         <createTable tableName="notifyuser">
-            <column name="orderId" type="VARCHAR(255)">
+            <column name="order_id" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="title" type="VARCHAR(10)"/>
-            <column name="firstName" type="VARCHAR(255)"/>
-            <column name="lastName" type="VARCHAR(255)"/>
+            <column name="first_name" type="VARCHAR(255)"/>
+            <column name="last_name" type="VARCHAR(255)"/>
             <column name="suffix" type="VARCHAR(255)"/>
-            <column name="streetAddress1" type="VARCHAR(255)">
+            <column name="street_address1" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="streetAddress2" type="VARCHAR(255)"/>
-            <column name="streetAddress3" type="VARCHAR(255)"/>
+            <column name="street_address2" type="VARCHAR(255)"/>
+            <column name="street_address3" type="VARCHAR(255)"/>
             <column name="city" type="VARCHAR(255)"/>
             <column name="state" type="VARCHAR(255)"/>
             <column name="zip" type="VARCHAR(255)"/>
@@ -92,13 +92,13 @@
     </changeSet>
      <changeSet author="dontest" id="201604201512">
         <createTable tableName="donation">
-            <column name="orderId" type="VARCHAR(255)">
+            <column name="order_id" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="dollarAmount" type="VARCHAR(10)"/>
+            <column name="dollar_amount" type="VARCHAR(10)"/>
             <column name="anonymous" type="BOOLEAN"/>
-            <column name="inHonorOf" type="VARCHAR(255)"/>
-            <column name="inMemoryOf" type="VARCHAR(255)"/>
+            <column name="in_honor_of" type="VARCHAR(255)"/>
+            <column name="in_memory_of" type="VARCHAR(255)"/>
             <column name="notify" type="BOOLEAN"/>
         </createTable>
     </changeSet>
@@ -108,16 +108,16 @@
             <column name="id" type="VARCHAR(255)">
                 <constraints nullable="false" primaryKey="true"/>
             </column>
-            <column name="orderId" type="VARCHAR(255)">
+            <column name="order_id" type="VARCHAR(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="orderItemNumber" type="INTEGER">
+            <column name="order_item_number" type="INTEGER">
                 <constraints nullable="false"/>
             </column>
-            <column name="designationName" type="VARCHAR(255)"/>
-            <column name="designationAmount" type="NUMERIC"/>
+            <column name="designation_name" type="VARCHAR(255)"/>
+            <column name="designation_amount" type="NUMERIC"/>
         </createTable>
-        <addUniqueConstraint tableName="designationlist" columnNames="orderId, orderItemNumber"/>
+        <addUniqueConstraint tableName="designationlist" columnNames="order_id, order_item_number"/>
     </changeSet>
     <changeSet author="dontest" id="201710250001">
         <createSequence sequenceName="hibernate_sequence3" />
@@ -130,14 +130,14 @@
 
     <changeSet author="dontest" id="201709231812">
         <addColumn tableName="transaction_detail">
-            <column name="transactionType" type="VARCHAR(255)"/>
+            <column name="transaction_type" type="VARCHAR(255)"/>
         </addColumn>
     </changeSet>
     
     <changeSet author="dontest" id="20180205">
     <renameColumn 
             newColumnName="id"
-            oldColumnName="orderId"
+            oldColumnName="order_id"
             tableName="transaction_detail"/>
 </changeSet>
 </databaseChangeLog>

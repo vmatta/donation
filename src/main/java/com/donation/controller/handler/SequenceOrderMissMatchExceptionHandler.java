@@ -18,22 +18,19 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SequenceOrderMissMatchExceptionHandler {
-    public static final Logger LOGGER = LoggerFactory.getLogger(SequenceOrderMissMatchExceptionHandler.class);
 
-    /**
-     * This method is called whenever
-     * some {@link DuplicateEntityException} exception is thrown
-     * @param exception
-     * @param request
-     * @return
-     */
-    @ExceptionHandler(InvalidOrderIdException.class)
-    public ResponseEntity<Object> handleUniqueEntityException(InvalidOrderIdException exception, WebRequest request) {
-        LOGGER.error("Sequence of order id is not proper: ", exception);
-        return ResponseEntity.unprocessableEntity().body(ImmutableMap.of(
-                "status", "FAILURE",
-                "code", 330,
-                "message", exception.getMessage()
-        ));
-    }
+  public static final Logger LOGGER = LoggerFactory.getLogger(SequenceOrderMissMatchExceptionHandler.class);
+
+  /**
+   * This method is called whenever some {@link DuplicateEntityException} exception is thrown
+   */
+  @ExceptionHandler(InvalidOrderIdException.class)
+  public ResponseEntity<Object> handleUniqueEntityException(InvalidOrderIdException exception, WebRequest request) {
+    LOGGER.error("Sequence of order id is not proper: ", exception);
+    return ResponseEntity.unprocessableEntity().body(ImmutableMap.of(
+        "status", "FAILURE",
+        "code", 330,
+        "message", exception.getMessage()
+    ));
+  }
 }

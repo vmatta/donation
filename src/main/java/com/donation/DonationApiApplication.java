@@ -7,13 +7,13 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 
 @SpringBootApplication
 public class DonationApiApplication extends SpringBootServletInitializer {
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		return application.sources(DonationApiApplication.class);
-	}
 
+  public static void main(String[] args) {
+    SpringApplication.run(DonationApiApplication.class, args);
+  }
 
-	public static void main(String[] args) {
-		SpringApplication.run(DonationApiApplication.class, args);
-	}
+  @Override
+  protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+    return application.sources(DonationApiApplication.class);
+  }
 }

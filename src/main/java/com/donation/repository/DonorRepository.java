@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface DonorRepository extends JpaRepository<Donor, String> {
-	Donor findByOrderId(String orderId);
+
+  Donor findByOrderId(String orderId);
 }

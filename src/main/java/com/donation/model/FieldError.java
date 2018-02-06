@@ -1,11 +1,10 @@
 package com.donation.model;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Sumit on 8/20/2017.
@@ -14,18 +13,19 @@ import java.util.List;
 @EqualsAndHashCode
 @ToString
 public class FieldError {
-    private final List<Error> errors;
 
-    public FieldError(){
-        this.errors = new ArrayList<>();
-    }
+  private final List<Error> errors;
 
-    public FieldError addError(Error error){
-        this.errors.add(error);
-        return this;
-    }
+  public FieldError() {
+    this.errors = new ArrayList<>();
+  }
 
-    public Boolean hasError(){
-        return !this.errors.isEmpty();
-    }
+  public FieldError addError(Error error) {
+    this.errors.add(error);
+    return this;
+  }
+
+  public Boolean hasError() {
+    return !this.errors.isEmpty();
+  }
 }

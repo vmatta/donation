@@ -17,22 +17,19 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class UniqueEntityExceptionHandler {
-    public static final Logger LOGGER = LoggerFactory.getLogger(UniqueEntityExceptionHandler.class);
 
-    /**
-     * This method is called whenever
-     * some {@link DuplicateEntityException} exception is thrown
-     * @param exception
-     * @param request
-     * @return
-     */
-    @ExceptionHandler(DuplicateEntityException.class)
-    public ResponseEntity<Object> handleUniqueEntityException(DuplicateEntityException exception, WebRequest request) {
-        LOGGER.error("Integrity violation Exception: ", exception);
-        return ResponseEntity.unprocessableEntity().body(ImmutableMap.of(
-                "status", "FAILURE",
-                "code", 330,
-                "message", exception.getMessage()
-        ));
-    }
+  public static final Logger LOGGER = LoggerFactory.getLogger(UniqueEntityExceptionHandler.class);
+
+  /**
+   * This method is called whenever some {@link DuplicateEntityException} exception is thrown
+   */
+  @ExceptionHandler(DuplicateEntityException.class)
+  public ResponseEntity<Object> handleUniqueEntityException(DuplicateEntityException exception, WebRequest request) {
+    LOGGER.error("Integrity violation Exception: ", exception);
+    return ResponseEntity.unprocessableEntity().body(ImmutableMap.of(
+        "status", "FAILURE",
+        "code", 330,
+        "message", exception.getMessage()
+    ));
+  }
 }

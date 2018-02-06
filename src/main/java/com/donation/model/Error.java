@@ -13,6 +13,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @ToString
 public class Error {
-    private final String field;
-    private final String message;
+
+  private final String field;
+  private final String message;
 }

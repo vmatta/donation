@@ -6,5 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface NotifyUserRepository extends JpaRepository<NotifyUser, String> {
-	NotifyUser findByOrderId(String orderId);
+
+  NotifyUser findByOrderId(String orderId);
 }
