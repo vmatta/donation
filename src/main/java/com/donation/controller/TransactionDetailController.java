@@ -28,10 +28,11 @@ public class TransactionDetailController {
   private OrderSequenceService orderSequenceService;
 
   @ResponseBody
-  @RequestMapping(value = "/customer/results", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
-  public TransactionDetail getFormData(@RequestParam("ORDERID") String orderId,
-      @RequestParam("APPID") String appId,
-      @RequestParam("APPKEY") String appKey,
+  //@RequestMapping(value = "/customer/results", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
+  @RequestMapping(value = "/customer/results", method = RequestMethod.POST, produces = MediaType.TEXT_HTML)
+  public String getFormData(@RequestParam("OrderID") String orderId,
+      @RequestParam("AppID") String appId,
+      @RequestParam("AppKey") String appKey,
       @RequestParam("PaymentTotal") String paymentTotal,
       @RequestParam("HasErrors") Boolean hasErrors,
       @RequestParam("Errors") String errors,
@@ -47,7 +48,16 @@ public class TransactionDetailController {
 
     TransactionDetail savedTransactionDetail = transactionDetailService.saveTransactionDetail(transactionDetail);
     LOGGER.info("Successfully stored transaction response for OrderSequence Id : {} and Transaction Id : {}", orderId, uPayTransactionID);
-    return savedTransactionDetail;
+    //return savedTransactionDetail;
+    
+    String myOutput = "uPayTransactionID=" + uPayTransactionID + "<br>";
+    myOutput+= "orderId=" + orderId+ "<br>";
+    
+    //return "<html><body>" + myOutput + "</body></html>";
+    return "<html><body><a [routerLink]=\"['/']\"> home</a></body></html>";
+
+    
+    
   }
 
   @RequestMapping(value = "/customer/cancel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
@@ -55,7 +65,7 @@ public class TransactionDetailController {
     LOGGER.debug("Request received to mark a transaction as cancel for the order Id {}", orderId);
     return transactionDetailService.cancelTransactionDetail(orderId);
   }
-
+  
 
   @RequestMapping(value = "/getOrderID", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
   public String getNextOrderId() {
@@ -69,4 +79,5 @@ public class TransactionDetailController {
     LOGGER.debug("Request received to check whether order is present");
     return transactionDetailService.verifyOrderID(orderId);
   }
+  
 }

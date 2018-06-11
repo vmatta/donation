@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 /**
- * Created by Sumit on 9/19/2017.
+ * Created by Vijay on 9/19/2017.
  */
 @Repository
 public interface DesignationRepository extends JpaRepository<Designation, String> {

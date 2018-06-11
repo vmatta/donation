@@ -25,8 +25,12 @@ public class DateUtil {
       return null;
     }
     try {
-      return DateUtils.parseDateStrictly(dateString, pattern);
-    } catch (ParseException e) {
+    	System.out.println("dateString : " + dateString + " Pattern " + pattern);
+     // return DateUtils.parseDateStrictly(dateString, pattern);
+    	return null;
+    } 
+//      catch (ParseException e) {
+    catch (Exception e) {
       LOGGER.debug("Error during parseDate", e);
       throw new DateParseException(e);
     }

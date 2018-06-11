@@ -45,9 +45,11 @@ public class NotifyUser implements Validate {
   private final String zip;
   @Column(name = "country")
   private final String country;
+  @Column(name = "email")
+  private String email;
 
   public NotifyUser(String orderId, String title, String firstName, String lastName, String suffix, String streetAddress1, String streetAddress2, String streetAddress3,
-      String city, String state, String zip, String country) {
+      String city, String state, String zip, String country, String email) {
     this.orderId = orderId;
     this.title = title;
     this.firstName = firstName;
@@ -60,10 +62,11 @@ public class NotifyUser implements Validate {
     this.state = state;
     this.zip = zip;
     this.country = country;
+    this.email = email;
   }
 
   public NotifyUser() {
-    this(null, null, null, null, null, null, null, null, null, null, null, null);
+    this(null, null, null, null, null, null, null, null, null, null, null, null, null);
   }
 
   @Override

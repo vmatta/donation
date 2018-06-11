@@ -15,7 +15,7 @@ import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * Created by Sumit on 9/19/2017.
+ * Created by Vijay on 9/19/2017.
  */
 @Entity
 @Table(name = "designationlist")

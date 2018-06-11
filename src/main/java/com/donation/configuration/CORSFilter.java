@@ -20,6 +20,7 @@ public class CORSFilter implements Filter {
   @Override
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
+	 System.out.println("CORSCORSCORSCORSCORSCORSCORSCORSCORSCORSCORS\n");
     HttpServletResponse httpResponse = (HttpServletResponse) response;
     httpResponse.setHeader("Access-Control-Allow-Origin", "*");
     httpResponse.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, OPTIONS, DELETE");
@@ -27,6 +28,7 @@ public class CORSFilter implements Filter {
     httpResponse.setHeader("Access-Control-Expose-Headers", "custom-header1, custom-header2");
     httpResponse.setHeader("Access-Control-Allow-Credentials", "false");
     httpResponse.setHeader("Access-Control-Max-Age", "4800");
+    //httpResponse.setHeader("Content-Security-Policy", "frame-ancestors 'self' www.chasepaymentechhostedpay-var.com");
     chain.doFilter(request, response);
   }
 

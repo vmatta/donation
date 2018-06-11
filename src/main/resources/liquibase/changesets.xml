@@ -44,28 +44,21 @@
                 <constraints nullable="false" primaryKey="true"/>
             </column>
             <column name="app_id" type="VARCHAR(255)">
-                <constraints nullable="false"/>
             </column>
             <column name="app_key" type="VARCHAR(255)">
-                <constraints nullable="false"/>
             </column>
             <column name="payment_total" type="VARCHAR(255)">
-                <constraints nullable="false"/>
             </column>
             <column name="has_error" type="BOOLEAN">
             </column>
             <column name="errors" type="TEXT">
-                <constraints nullable="false"/>
             </column>
             <column name="transaction_date_time" type="date"/>
             <column name="approved" type="BIGINT">
-                <constraints nullable="false"/>
             </column>
             <column name="transaction_id" type="VARCHAR(255)">
-                <constraints nullable="false"/>
             </column>
             <column name="payment_mode" type="VARCHAR(255)">
-                <constraints nullable="false"/>
             </column>
         </createTable>
      </changeSet>
@@ -139,5 +132,6 @@
             newColumnName="id"
             oldColumnName="order_id"
             tableName="transaction_detail"/>
-</changeSet>
+	</changeSet>
+	
 </databaseChangeLog>

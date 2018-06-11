@@ -1,20 +1,53 @@
+//package com.donation.service;
+//
+//
+//import com.donation.entity.Donation;
+//import com.donation.entity.Donor;
+//import com.donation.entity.NotifyUser;
+//import com.donation.exception.DuplicateEntityException;
+//import com.donation.exception.InvalidEntityException;
+//import com.donation.model.FieldError;
+//import com.donation.repository.DonationRepository;
+//import com.donation.repository.DonorRepository;
+//import com.donation.repository.NotifyUserRepository;
+//
+//import java.util.*;
+//
+//
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+
+
 package com.donation.service;
 
+import static java.util.Collections.emptyList;
+import static java.util.stream.Collectors.groupingBy;
+import static org.apache.commons.collections.CollectionUtils.isEmpty;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.donation.entity.Donation;
 import com.donation.entity.Donor;
 import com.donation.entity.NotifyUser;
 import com.donation.exception.DuplicateEntityException;
 import com.donation.exception.InvalidEntityException;
+import com.donation.model.Error;
 import com.donation.model.FieldError;
 import com.donation.repository.DonationRepository;
 import com.donation.repository.DonorRepository;
 import com.donation.repository.NotifyUserRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 /**
  * Created by Sumit on 8/20/2017.
  */
@@ -86,6 +119,71 @@ public class DonorService {
     LOGGER.info("Successfully stored donation information", savedDonation);
     return savedDonation;
   }
-
-
+  
+  /**
+	 * method to save multi notify user
+	 * 
+	 * @author R.Vijay
+	 * @param notifyuserList
+	 * @return
+	 */
+	public List<NotifyUser> saveMultiNotifyUserInformation(
+			List<NotifyUser> notifyuserList) {
+		if (isEmpty(notifyuserList)) {
+			return emptyList();
+		}
+		List<FieldError> fieldErrors = notifyuserList.stream()
+				.map(NotifyUser::validate)
+				.filter(fieldError -> fieldError.hasError())
+				.collect(Collectors.toList());
+		if (!isEmpty(fieldErrors)) {
+			List<Error> errorList = fieldErrors.stream()
+					.map(fieldError -> fieldError.getErrors())
+					.flatMap(Collection::stream).collect(Collectors.toList());
+			LOGGER.error("Error found in the request body: " + errorList);
+			throw new InvalidEntityException(errorList);
+		}
+		Set<String> uniqueOrderIds = notifyuserList.stream()
+				.map(NotifyUser::getOrderId).distinct()
+				.collect(Collectors.toSet());
+		LOGGER.debug(
+				"Deleting existing record in case it present in with order ids [{}]",
+				uniqueOrderIds);
+		// notifyUserRepository.deleteOrders(uniqueOrderIds);
+		Set<Map.Entry<String, List<NotifyUser>>> groupedBasedOnOrderId = notifyuserList
+				.stream()
+				.collect(groupingBy(notifyuser -> notifyuser.getOrderId()))
+				.entrySet();
+		List<NotifyUser> updatedUsrListWithOrderNumber = new ArrayList<>();
+		for (Map.Entry<String, List<NotifyUser>> listEntry : groupedBasedOnOrderId) {
+			List<NotifyUser> notifyUsrList = listEntry.getValue();
+			// AtomicInteger atomicInteger = new AtomicInteger(1);
+			notifyUsrList.stream().forEach(
+					notifyUser -> updatedUsrListWithOrderNumber
+							.add(new NotifyUser(notifyUser.getOrderId(),
+												notifyUser.getTitle(), 
+												notifyUser.getFirstName(), 
+												notifyUser.getLastName(), 
+												
+												notifyUser.getSuffix(),
+												notifyUser.getStreetAddress1(), 
+												notifyUser.getStreetAddress2(), 
+												notifyUser.getStreetAddress3(), 
+												notifyUser.getCity(), 
+												notifyUser.getState(),
+												notifyUser.getZip(), 
+												notifyUser.getCountry(),
+												notifyUser.getEmail()
+											))
+							);
+		}
+		List<NotifyUser> finalNotifyUserList = notifyUserRepository
+				.save(updatedUsrListWithOrderNumber);
+		LOGGER.debug("multiple notify user  Saved successfully : {}",
+				finalNotifyUserList);
+		return finalNotifyUserList;
+	}
 }
+
+
+

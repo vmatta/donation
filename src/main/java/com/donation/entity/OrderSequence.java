@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 /**
- * Created by Sumit on 9/20/2017.
+ * Created by Vijay on 9/20/2017.
  */
 @Entity
 @Table(name = "ORDERSEQ")

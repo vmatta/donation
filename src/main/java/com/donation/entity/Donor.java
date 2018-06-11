@@ -87,15 +87,15 @@ public class Donor implements Validate {
     if (!isNumeric(this.orderId) || isEmpty(this.orderId)) {
       fieldError.addError(Error.builder().field("orderId").message(String.format("Numeric OrderSequence Id expected but received %s", this.orderId)).build());
     }
-    if (isEmpty(this.email)) {
-      fieldError.addError(Error.builder().field("email").message("Email id is missing").build());
-    }
-    if (isEmpty(this.phone)) {
-      fieldError.addError(Error.builder().field("phone").message("Phone number is missing").build());
-    }
-    if (isEmpty(this.streetAddress1)) {
-      fieldError.addError(Error.builder().field("streetAddress1").message("Street Address 1 is missing").build());
-    }
+//    if (isEmpty(this.email)) {
+//      fieldError.addError(Error.builder().field("email").message("Email id is missing").build());
+//    }
+//    if (isEmpty(this.phone)) {
+//      fieldError.addError(Error.builder().field("phone").message("Phone number is missing").build());
+//    }
+//    if (isEmpty(this.streetAddress1)) {
+//      fieldError.addError(Error.builder().field("streetAddress1").message("Street Address 1 is missing").build());
+//    }
     return fieldError;
   }
 }

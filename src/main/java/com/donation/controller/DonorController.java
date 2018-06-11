@@ -65,6 +65,17 @@ public class DonorController {
   }
 
   /**
+   * Store multiple details of a notifiy user by donor
+   * 
+   * @author Vijay
+   */
+	@RequestMapping(value = "/save/multiple-notifyuser", method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
+	public List<NotifyUser> saveMultiNotifyUser(
+			@RequestBody final List<NotifyUser> notifyuserList) {
+		return donorService.saveMultiNotifyUserInformation(notifyuserList);
+	}
+	
+  /**
    * Store details of a Donation in the Donation table
    */
   @RequestMapping(value = "/save/donation", method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
