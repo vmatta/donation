@@ -1,6 +1,8 @@
 package com.donation.controller;
 
+import static java.util.Collections.emptyList;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
+import static org.apache.commons.lang3.ObjectUtils.defaultIfNull;
 
 import com.donation.entity.Designation;
 import com.donation.entity.Donation;
@@ -60,8 +62,8 @@ public class DonorController {
    * Store details of a donor in the donor table
    */
   @RequestMapping(value = "/save/notifyuser", method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
-  public NotifyUser load(@RequestBody final NotifyUser notifyuser) {
-    return donorService.saveNotifyUserInformation(notifyuser);
+  public List<NotifyUser> load(@RequestBody final List<NotifyUser> notifyUsers) {
+    return donorService.saveNotifyUserInformation(defaultIfNull(notifyUsers, emptyList()));
   }
 
   /**
