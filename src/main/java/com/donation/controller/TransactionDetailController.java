@@ -1,21 +1,24 @@
 package com.donation.controller;
 
-import static com.donation.util.CastUtil.getDateTime;
-
 import com.donation.entity.TransactionDetail;
+import com.donation.model.ImageMapper;
+import com.donation.model.Mail;
+import com.donation.service.EmailHtmlSender;
 import com.donation.service.OrderSequenceService;
 import com.donation.service.TransactionDetailService;
-import javax.ws.rs.QueryParam;
-import javax.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.thymeleaf.context.Context;
+
+import javax.ws.rs.QueryParam;
+import javax.ws.rs.core.MediaType;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
+import static com.donation.util.CastUtil.getDateTime;
 
 @RestController
 @RequestMapping("/")
@@ -55,9 +58,6 @@ public class TransactionDetailController {
     
     //return "<html><body>" + myOutput + "</body></html>";
     return "<html><body><a [routerLink]=\"['/']\"> home</a></body></html>";
-
-    
-    
   }
 
   @RequestMapping(value = "/customer/cancel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
@@ -79,5 +79,4 @@ public class TransactionDetailController {
     LOGGER.debug("Request received to check whether order is present");
     return transactionDetailService.verifyOrderID(orderId);
   }
-  
 }

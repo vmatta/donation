@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:remove="all"><span th:text="${title}"></span></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:300,800" rel="stylesheet" type="text/css"/>
+    <link href="http://fonts.googleapis.com/css?family=Oleo+Script:400" rel="stylesheet" type="text/css"/>
+</head>
+<body>
+<div>
+    <br/>
+    <img src="email-banner.png" th:src="'cid:' + ${imageResourceName}" height="100" width="50%" alt="So Crisp"
+         border="0" style="display: block;"/>
+
+    <p>Dear <span th:text="${firstName}"/> <span th:text="${lastName}"/>,</p>
+
+    <p>Thank you for your donation of $<span th:text="${donationAmount}"/>. Your donation has been successfully
+        processed. Your transaction id <span th:text="${transactionId}"></span>.</p>
+
+    <p>Regard,</p>
+
+    <p>Team UPMC</p>
+</div>
+
+</body>
+</html>
