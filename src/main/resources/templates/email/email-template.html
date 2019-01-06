@@ -9,17 +9,29 @@
 <body>
 <div>
     <br/>
-    <img src="email-banner.png" th:src="'cid:' + ${imageResourceName}" height="100" width="50%" alt="So Crisp"
-         border="0" style="display: block;"/>
-
+ 
     <p>Dear <span th:text="${firstName}"/> <span th:text="${lastName}"/>,</p>
 
-    <p>Thank you for your donation of $<span th:text="${donationAmount}"/>. Your donation has been successfully
-        processed. Your transaction id <span th:text="${transactionId}"></span>.</p>
+    <p>Thank you for your gift of $<span th:text="${donationAmount}"/> to the <span th:text="${designationName}"/>. </p>
+    
+    <p> You have made an important contribution to UPMC that will benefit the lives and health of our patients in Pittsburgh and around the world. 
+        Your dedication gives our clinicians, researchers, and staff the ability to transform lives through innovative research and compassionate,
+        cutting-edge patient care.     
+    </p>    
+    
+    <p> We are grateful for your support. </p>
+		
+	<p> Sincerely,</p>
+	<p>
+		Kristin Davitt<br/>
+		Chief Development Officer, UPMC
+    </p>
 
-    <p>Regard,</p>
-
-    <p>Team UPMC</p>
+<p>
+<small>
+Your gift is tax-deductible to the extent allowed by law. Thank you! The official registration and financial information may be obtained from the Pennsylvania Department of State by calling toll free within Pennsylvania, 800-732-0999. Registration does not imply endorsement. If you wish to have your name removed from our mailing list, please e-mail: optout@upmc.edu or mail your request to Opt Out, Forbes Tower, Suite 808, 200 Lothrop Street, Pittsburgh, PA 15213.
+</small>
+</p>
 </div>
 
 </body>

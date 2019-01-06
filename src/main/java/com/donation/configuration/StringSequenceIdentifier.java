@@ -16,7 +16,7 @@ import org.hibernate.service.ServiceRegistry;
 import org.hibernate.type.Type;
 
 /**
- * Created by Sumit on 9/20/2017.
+ * Created by Vijay on 9/20/2017.
  */
 public class StringSequenceIdentifier implements IdentifierGenerator, Configurable {
 

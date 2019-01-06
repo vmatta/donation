@@ -1,6 +1,8 @@
 package com.donation.repository;
 
 import com.donation.entity.Designation;
+import com.donation.entity.Donor;
+
 import java.util.Set;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -18,4 +20,6 @@ public interface DesignationRepository extends JpaRepository<Designation, String
   @Modifying
   @Query("delete from Designation d where d.orderId in :orderIds")
   void deleteOrders(@Param("orderIds") Set<String> orderIds);
+  
+  Designation findByOrderId(String orderId);
 }

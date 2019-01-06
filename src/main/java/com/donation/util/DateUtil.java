@@ -2,6 +2,7 @@ package com.donation.util;
 
 import com.donation.exception.DateParseException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -25,9 +26,14 @@ public class DateUtil {
       return null;
     }
     try {
-    	System.out.println("dateString : " + dateString + " Pattern " + pattern);
-     // return DateUtils.parseDateStrictly(dateString, pattern);
-    	return null;
+    	
+    	SimpleDateFormat formatter7 = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+    	//String sdate7 = "06/14/2018 23:33:33";
+    	Date tdate = formatter7.parse(dateString);
+    	
+    	System.out.println("dateString : " + dateString + " Pattern " + pattern + "tdate " + tdate);
+    	//return DateUtils.parseDateStrictly(dateString, pattern);
+    	return tdate;
     } 
 //      catch (ParseException e) {
     catch (Exception e) {

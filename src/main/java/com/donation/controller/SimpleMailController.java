@@ -19,10 +19,10 @@ import java.util.List;
 import java.util.Locale;
 
 /**
- * Created by Sumit on 6/11/2018.
+ * Created by Vijay on 6/11/2018.
  */
 @RestController
-@RequestMapping("/mail")
+@RequestMapping("/donation-api/mail")
 @Profile("dev")
 public class SimpleMailController {
 

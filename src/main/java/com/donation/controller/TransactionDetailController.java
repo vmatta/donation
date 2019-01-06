@@ -20,8 +20,9 @@ import java.util.Locale;
 
 import static com.donation.util.CastUtil.getDateTime;
 
+// changed requestmapping from "/"
 @RestController
-@RequestMapping("/")
+@RequestMapping("/donation-api")
 public class TransactionDetailController {
 
   public static final Logger LOGGER = LoggerFactory.getLogger(TransactionDetailController.class);
@@ -34,19 +35,24 @@ public class TransactionDetailController {
   //@RequestMapping(value = "/customer/results", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
   @RequestMapping(value = "/customer/results", method = RequestMethod.POST, produces = MediaType.TEXT_HTML)
   public String getFormData(@RequestParam("OrderID") String orderId,
-      @RequestParam("AppID") String appId,
-      @RequestParam("AppKey") String appKey,
+//      @RequestParam("AppID") String appId,
+//      @RequestParam("AppKey") String appKey,
       @RequestParam("PaymentTotal") String paymentTotal,
       @RequestParam("HasErrors") Boolean hasErrors,
       @RequestParam("Errors") String errors,
-      @RequestParam("Approved") int approved,
+      @RequestParam("Approved") String approved,
       @RequestParam("UPayTransactionID") String uPayTransactionID,
-      @RequestParam("TransactionDateTime") String transactionDateTime,
-      @RequestParam("PaymentMode") String paymentMode) {
-    TransactionDetail transactionDetail = TransactionDetail.builder().orderId(orderId)
-        .appId(appId).appKey(appKey).approved(approved).paymentMode(paymentMode).errors(errors)
-        .transactionId(uPayTransactionID).hasError(hasErrors).transactionDateTIme(getDateTime(transactionDateTime)).paymentTotal(paymentTotal)
-        .build();
+      @RequestParam("TransactionDateTime") String transactionDateTime
+//      @RequestParam("PaymentMode") String paymentMode
+      ) {
+//    TransactionDetail transactionDetail = TransactionDetail.builder().orderId(orderId)
+//        .appId(appId).appKey(appKey).approved(approved).paymentMode(paymentMode).errors(errors)
+//        .transactionId(uPayTransactionID).hasError(hasErrors).transactionDateTIme(getDateTime(transactionDateTime)).paymentTotal(paymentTotal)
+//        .build();
+	  TransactionDetail transactionDetail = TransactionDetail.builder().orderId(orderId)
+		        .approved(approved).errors(errors)
+		        .transactionId(uPayTransactionID).hasError(hasErrors).transactionDateTIme(getDateTime(transactionDateTime)).paymentTotal(paymentTotal)
+		        .build();
     LOGGER.debug("Storing transaction response : {}", transactionDetail);
 
     TransactionDetail savedTransactionDetail = transactionDetailService.saveTransactionDetail(transactionDetail);
@@ -56,16 +62,31 @@ public class TransactionDetailController {
     String myOutput = "uPayTransactionID=" + uPayTransactionID + "<br>";
     myOutput+= "orderId=" + orderId+ "<br>";
     
-    //return "<html><body>" + myOutput + "</body></html>";
-    return "<html><body><a [routerLink]=\"['/']\"> home</a></body></html>";
+    return "<html><body> Processing Request ...</body></html>";
   }
 
-  @RequestMapping(value = "/customer/cancel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
-  public TransactionDetail cancelTransaction(@QueryParam("orderId") String orderId) {
+  @RequestMapping(value = "/customer/cancel", method = RequestMethod.POST, produces = MediaType.TEXT_HTML)
+  public String cancelTransaction(@QueryParam("orderId") String orderId) {
     LOGGER.debug("Request received to mark a transaction as cancel for the order Id {}", orderId);
-    return transactionDetailService.cancelTransactionDetail(orderId);
+    
+    TransactionDetail cancelTransaction = transactionDetailService.cancelTransactionDetail(orderId);
+    
+    return "<html><body> Cancelling Request ...</body></html>";
   }
   
+  @RequestMapping(value = "/customer/delete", method = RequestMethod.POST, produces = MediaType.TEXT_HTML)
+  public void deleteTransaction(@QueryParam("orderId") String orderId) {
+    LOGGER.debug("Request received delete a previously cancelled transaction for the order Id {}", orderId);
+    
+    transactionDetailService.deleteTransactionDetail(orderId);
+  }
+  
+//  @RequestMapping(value = "/customer/cancel", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON)
+//  public TransactionDetail cancelTransaction(@QueryParam("orderId") String orderId) {
+//    LOGGER.debug("Request received to mark a transaction as cancel for the order Id {}", orderId);
+//    return transactionDetailService.cancelTransactionDetail(orderId);
+//  }
+//  
 
   @RequestMapping(value = "/getOrderID", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
   public String getNextOrderId() {
@@ -77,6 +98,7 @@ public class TransactionDetailController {
   @RequestMapping(value = "/verifyOrderID/{orderId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON)
   public TransactionDetail verifyOrderID(@PathVariable("orderId") String orderId) {
     LOGGER.debug("Request received to check whether order is present");
+    System.out.println("ORDER ID IN REST : " + orderId);
     return transactionDetailService.verifyOrderID(orderId);
   }
 }

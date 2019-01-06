@@ -134,4 +134,74 @@
             tableName="transaction_detail"/>
 	</changeSet>
 	
+	
+	<changeSet author="dontest" id="201806140431">
+        <addColumn tableName="notifyuser">
+            <column name="email" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+        <changeSet author="dontest" id="201806151131">
+        <dropPrimaryKey constraintName="order_id"
+                        tableName="notifyuser"/>
+    </changeSet>
+    <changeSet author="dontest" id="201806151134">
+        <addColumn tableName="notifyuser">
+            <column name="id" type="VARCHAR(255)">
+            	<constraints nullable="false" primaryKey="true"/>
+            </column>
+        </addColumn>
+    </changeSet>
+    <changeSet author="dontest" id="201806151140">
+        <addColumn tableName="notifyuser">
+            <column name="order_item_number" type="INTEGER"/>
+        </addColumn>
+    </changeSet>
+     
+     <changeSet author="dontest" id="changetostring">
+        <modifyDataType tableName="transaction_detail"
+            			columnName="approved" 
+            			newDataType="VARCHAR(1)" />
+     </changeSet>
+     <changeSet author="dontest" id="increasesize">
+        <modifyDataType tableName="transaction_detail"
+            			columnName="approved" 
+            			newDataType="VARCHAR(2)" />
+     </changeSet>
+    
+	 <changeSet author="dontest" id="noneed1">
+        <dropColumn tableName="transaction_detail">
+            <column name="app_id" type="VARCHAR(255)"/>
+        </dropColumn>
+ 	 </changeSet>
+     <changeSet author="dontest" id="noneed2">
+        <dropColumn tableName="transaction_detail">
+            <column name="app_key" type="VARCHAR(255)"/>
+        </dropColumn>
+     </changeSet>
+     <changeSet author="dontest" id="noneed3">
+        <dropColumn tableName="transaction_detail">
+            <column name="payment_mode" type="VARCHAR(255)"/>
+        </dropColumn>
+     </changeSet>
+     <changeSet author="dontest" id="dropphoneconstraint">
+        <dropNotNullConstraint tableName="donor" 
+        					   columnName="phone" 
+        					   columnDataType="VARCHAR(255)" />
+     </changeSet>
+      <changeSet author="dontest" id="changetonumeric">
+        <modifyDataType tableName="donation"
+            			columnName="dollar_amount" 
+            			newDataType="NUMERIC" />
+     </changeSet>
+     
+     <changeSet author="dontest" id="transmappingidv1">
+        <createTable tableName="transactionmapping">
+            <column name="order_id" type="VARCHAR(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="donationentryid" type="NUMBER(10)">
+            </column>
+        </createTable>
+     </changeSet>
+     
 </databaseChangeLog>

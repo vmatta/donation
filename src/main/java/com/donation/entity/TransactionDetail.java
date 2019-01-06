@@ -29,10 +29,10 @@ public class TransactionDetail implements Validate {
   @Id
   @Column(name = "id")
   private final String orderId;
-  @Column(name = "app_id")
-  private final String appId;
-  @Column(name = "app_key")
-  private final String appKey;
+//  @Column(name = "app_id")
+//  private final String appId;
+//  @Column(name = "app_key")
+//  private final String appKey;
   @Column(name = "payment_total")
   private final String paymentTotal;
   @Column(name = "has_error")
@@ -40,35 +40,38 @@ public class TransactionDetail implements Validate {
   @Column(name = "errors")
   private final String errors;
   @Column(name = "approved")
-  private final Integer approved;
+  private final String approved;
   @Column(name = "transaction_id")
   private final String transactionId;
   @Column(name = "transaction_date_time")
   private final Date transactionDateTIme;
-  @Column(name = "payment_mode")
-  private final String paymentMode;
+//  @Column(name = "payment_mode")
+//  private final String paymentMode;
   @Enumerated(EnumType.STRING)
   @Column(name = "transaction_type")
   private TransactionType transactionType;
 
-  public TransactionDetail(String orderId, String appId, String appKey, String paymentTotal, Boolean hasError, String errors, Integer approved, String transactionId,
-      Date transactionDateTIme, String paymentMode, TransactionType transactionType) {
+//  public TransactionDetail(String orderId, String appId, String appKey, String paymentTotal, Boolean hasError, String errors, String approved, String transactionId,
+//      Date transactionDateTIme, String paymentMode, TransactionType transactionType) {
+  public TransactionDetail(String orderId, String paymentTotal, Boolean hasError, String errors, String approved, String transactionId,
+		      Date transactionDateTIme, TransactionType transactionType) {
+  
     this.orderId = orderId;
-    this.appId = appId;
-    this.appKey = appKey;
+//    this.appId = appId;
+//    this.appKey = appKey;
     this.paymentTotal = paymentTotal;
     this.hasError = hasError;
     this.errors = errors;
     this.approved = approved;
     this.transactionId = transactionId;
     this.transactionDateTIme = transactionDateTIme;
-    this.paymentMode = paymentMode;
+//    this.paymentMode = paymentMode;
     this.transactionType = transactionType;
   }
 
   // Required for hibernate to initialize object
   public TransactionDetail() {
-    this(null, null, null, null, null, null, null, null, null, null, null);
+    this(null, null, null, null, null, null, null, null);
   }
 
   public FieldError validate() {

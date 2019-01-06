@@ -46,6 +46,7 @@ public class EmailSender {
             MimeMessageHelper helper = new MimeMessageHelper(message, MimeMessageHelper.MULTIPART_MODE_MIXED_RELATED, StandardCharsets.UTF_8.name());
             helper.setTo(mail.getRecipient());
             helper.setSubject(mail.getSubject());
+            helper.setFrom("giving@upmc.edu");
             helper.setText(text, isHtml);
             List<ImageMapper> imageMappers = defaultIfNull(mail.getImageMappers(), emptyList());
             imageMappers.forEach(imageMapper -> {

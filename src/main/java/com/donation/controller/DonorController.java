@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/donor")
+@RequestMapping("/donation-api/donor")
 public class DonorController {
 
   public static final Logger LOGGER = LoggerFactory.getLogger(DonorController.class);
@@ -66,17 +66,7 @@ public class DonorController {
     return donorService.saveNotifyUserInformation(defaultIfNull(notifyUsers, emptyList()));
   }
 
-  /**
-   * Store multiple details of a notifiy user by donor
-   * 
-   * @author Vijay
-   */
-	@RequestMapping(value = "/save/multiple-notifyuser", method = RequestMethod.POST, consumes = APPLICATION_JSON, produces = APPLICATION_JSON)
-	public List<NotifyUser> saveMultiNotifyUser(
-			@RequestBody final List<NotifyUser> notifyuserList) {
-		return donorService.saveMultiNotifyUserInformation(notifyuserList);
-	}
-	
+
   /**
    * Store details of a Donation in the Donation table
    */

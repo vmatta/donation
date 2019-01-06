@@ -3,6 +3,8 @@ package com.donation.entity;
 import static org.apache.commons.lang3.StringUtils.isEmpty;
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 
+import java.math.BigDecimal;
+
 import com.donation.model.Error;
 import com.donation.model.FieldError;
 import javax.persistence.Column;
@@ -24,7 +26,7 @@ public class Donation implements Validate {
   @Column(name = "order_id", unique = true)
   private final String orderId;
   @Column(name = "dollar_amount")
-  private final Integer dollarAmount;
+  private final BigDecimal dollarAmount;
   @Column(name = "anonymous")
   private final boolean anonymous;
   @Column(name = "in_honor_of")
@@ -35,7 +37,7 @@ public class Donation implements Validate {
   private final boolean notify;
 
 
-  public Donation(String orderId, Integer dollarAmount, boolean anonymous, String inHonorOf, String inMemoryOf, boolean notify) {
+  public Donation(String orderId, BigDecimal dollarAmount, boolean anonymous, String inHonorOf, String inMemoryOf, boolean notify) {
     this.orderId = orderId;
     this.dollarAmount = dollarAmount;
     this.anonymous = anonymous;

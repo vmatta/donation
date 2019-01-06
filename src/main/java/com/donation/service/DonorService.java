@@ -31,13 +31,16 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import org.hibernate.validator.internal.util.privilegedactions.GetClassLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.donation.entity.Designation;
 import com.donation.entity.Donation;
 import com.donation.entity.Donor;
 import com.donation.entity.NotifyUser;
@@ -72,7 +75,8 @@ public class DonorService {
             throw new InvalidEntityException(validate.getErrors());
         }
         if (donorRepository.exists(donor.getOrderId())) {
-            throw new DuplicateEntityException(String.format("Entry already exist with order id %s", donor.getOrderId()));
+        	donorRepository.delete(donor.getOrderId());
+           // throw new DuplicateEntityException(String.format("Entry already exist with order id %s", donor.getOrderId()));
         }
         Donor savedDonor = donorRepository.save(donor);
         LOGGER.info("Successfully stored donor information", savedDonor);
@@ -83,25 +87,48 @@ public class DonorService {
     public List<NotifyUser> saveNotifyUserInformation(List<NotifyUser> notifyusers) {
         List<NotifyUser> savedNotifyUser = new ArrayList<>();
         // TODO Auto-generated method stub
+        if (isEmpty(notifyusers)) {
+            return emptyList();
+          }
+        
+        Set<String> uniqueOrderIds = notifyusers.stream().map(NotifyUser::getOrderId).distinct().collect(Collectors.toSet());
+        LOGGER.debug("Deleting existing Notifications for order ids [{}]", uniqueOrderIds);
+        notifyUserRepository.deleteOrders(uniqueOrderIds);
+        
+        //LOGGER.info("Deleting user notification already existing {}", notifyusers);
+        //  throw new DuplicateEntityException(String.format("Entry already exist with order id %s", notifyuser.getOrderId()));
+        
+        List<NotifyUser> updatedWithOrderItemNumber = new ArrayList<>();
+        
         notifyusers.forEach(notifyUser -> {
             LOGGER.info("OrderSequence ID of Request : ", notifyUser.getOrderId());
             LOGGER.debug("Request came for storing notifyuser {}", notifyUser);
             FieldError validate = notifyUser.validate();
             if (validate.hasError()) {
-                LOGGER.error("Error found while validating donor" + validate.getErrors());
+                LOGGER.error("Error found while validating notifyUser" + validate.getErrors());
                 throw new InvalidEntityException(validate.getErrors());
             }
-            if (notifyUserRepository.exists(notifyUser.getOrderId())) {
-                //	notifyUserRepository.delete(notifyuser.getOrderId());
-
-                LOGGER.info("Deleting user notification already existing {}", notifyUser);
-//            throw new DuplicateEntityException(String.format("Entry already exist with order id %s", notifyuser.getOrderId()));
-            }
-            savedNotifyUser.add(notifyUserRepository.saveAndFlush(notifyUser));
-
         });
-        LOGGER.info("Successfully stored donor information", savedNotifyUser);
-        return savedNotifyUser;
+            
+            Set<Map.Entry<String, List<NotifyUser>>> groupedBasedOnOrderId = notifyusers.stream().collect(groupingBy(nUsr -> nUsr.getOrderId())).entrySet();
+//            List<NotifyUser> updatedWithOrderItemNumber = new ArrayList<>();
+            for (Map.Entry<String, List<NotifyUser>> listEntry : groupedBasedOnOrderId) {
+              List<NotifyUser> notifyUserList = listEntry.getValue();
+              AtomicInteger atomicInteger = new AtomicInteger(1);
+              notifyUserList.stream().forEach(nUsr -> updatedWithOrderItemNumber
+                  .add(new NotifyUser(nUsr.getOrderId(), atomicInteger.getAndIncrement(), nUsr.getTitle(), nUsr.getFirstName(),
+                		              nUsr.getLastName(), nUsr.getSuffix(), nUsr.getStreetAddress1(), nUsr.getStreetAddress2(),
+                		              nUsr.getStreetAddress3(), nUsr.getCity(), nUsr.getState(), nUsr.getZip(), 
+                		              nUsr.getCountry(), nUsr.getEmail()
+                		              )));
+            }
+            
+       
+        
+        List<NotifyUser> notificationList = notifyUserRepository.save(updatedWithOrderItemNumber);
+        LOGGER.debug("notifications Saved successfully : {}", notificationList);
+       
+        return notificationList;
     }
 
     public Donation saveDonation(Donation donation) {
@@ -125,69 +152,7 @@ public class DonorService {
         return savedDonation;
     }
 
-    /**
-     * method to save multi notify user
-     *
-     * @param notifyuserList
-     * @return
-     * @author R.Vijay
-     */
-    public List<NotifyUser> saveMultiNotifyUserInformation(
-            List<NotifyUser> notifyuserList) {
-        if (isEmpty(notifyuserList)) {
-            return emptyList();
-        }
-        List<FieldError> fieldErrors = notifyuserList.stream()
-                .map(NotifyUser::validate)
-                .filter(fieldError -> fieldError.hasError())
-                .collect(Collectors.toList());
-        if (!isEmpty(fieldErrors)) {
-            List<Error> errorList = fieldErrors.stream()
-                    .map(fieldError -> fieldError.getErrors())
-                    .flatMap(Collection::stream).collect(Collectors.toList());
-            LOGGER.error("Error found in the request body: " + errorList);
-            throw new InvalidEntityException(errorList);
-        }
-        Set<String> uniqueOrderIds = notifyuserList.stream()
-                .map(NotifyUser::getOrderId).distinct()
-                .collect(Collectors.toSet());
-        LOGGER.debug(
-                "Deleting existing record in case it present in with order ids [{}]",
-                uniqueOrderIds);
-        // notifyUserRepository.deleteOrders(uniqueOrderIds);
-        Set<Map.Entry<String, List<NotifyUser>>> groupedBasedOnOrderId = notifyuserList
-                .stream()
-                .collect(groupingBy(notifyuser -> notifyuser.getOrderId()))
-                .entrySet();
-        List<NotifyUser> updatedUsrListWithOrderNumber = new ArrayList<>();
-        for (Map.Entry<String, List<NotifyUser>> listEntry : groupedBasedOnOrderId) {
-            List<NotifyUser> notifyUsrList = listEntry.getValue();
-            // AtomicInteger atomicInteger = new AtomicInteger(1);
-            notifyUsrList.stream().forEach(
-                    notifyUser -> updatedUsrListWithOrderNumber
-                            .add(new NotifyUser(notifyUser.getOrderId(),
-                                    notifyUser.getTitle(),
-                                    notifyUser.getFirstName(),
-                                    notifyUser.getLastName(),
-
-                                    notifyUser.getSuffix(),
-                                    notifyUser.getStreetAddress1(),
-                                    notifyUser.getStreetAddress2(),
-                                    notifyUser.getStreetAddress3(),
-                                    notifyUser.getCity(),
-                                    notifyUser.getState(),
-                                    notifyUser.getZip(),
-                                    notifyUser.getCountry(),
-                                    notifyUser.getEmail()
-                            ))
-            );
-        }
-        List<NotifyUser> finalNotifyUserList = notifyUserRepository
-                .save(updatedUsrListWithOrderNumber);
-        LOGGER.debug("multiple notify user  Saved successfully : {}",
-                finalNotifyUserList);
-        return finalNotifyUserList;
-    }
+     
 }
 
 
